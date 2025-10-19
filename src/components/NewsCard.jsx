@@ -1,8 +1,10 @@
 import { CiBookmark } from "react-icons/ci";
 import { FaStar, FaEye, FaShareAlt } from "react-icons/fa";
+import { Link } from "react-router";
 
 const NewsCard = ({ news }) => {
   const {
+    id,
     title,
     author,
     thumbnail_url,
@@ -80,9 +82,9 @@ const NewsCard = ({ news }) => {
         <p className="text-sm text-gray-600 leading-relaxed">
           {details.slice(0, 350)}...
         </p>
-        <button className="text-primary font-semibold hover:underline mt-1">
+        <Link to={`/news-details/${id}`} className="text-primary font-semibold hover:underline mt-1">
           Read More
-        </button>
+        </Link>
       </div>
 
       {/* Footer */}

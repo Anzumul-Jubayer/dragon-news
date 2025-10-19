@@ -1,40 +1,59 @@
-import React from 'react';
+import React from "react";
 import { createBrowserRouter } from "react-router";
-import HLayout from '../layouts/HLayout';
-import Home from '../pages/Home';
-import CategoryNews from '../pages/CategoryNews';
-
-
+import HLayout from "../layouts/HLayout";
+import Home from "../pages/Home";
+import CategoryNews from "../pages/CategoryNews";
+import LogIn from "../pages/LogIn";
+import Register from "../pages/Register";
+import AuthLayout from "../layouts/AuthLayout";
+import NewsDetails from "../pages/NewsDetails";
+import PrivateRoute from "../provider/PrivateRoute";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <HLayout></HLayout>,
-    children:[
+    children: [
       {
-        path:"",
-        element:<Home></Home>
+        path: "",
+        element: <Home></Home>,
       },
       {
-        path:'/category-news/:id',
-        element:<CategoryNews></CategoryNews>,
-        loader:()=>fetch('/news.json'),
-        hydrateFallbackElement:<p>Loading</p>
-      }
-    ]
+        path: "/category-news/:id",
+        element: <CategoryNews></CategoryNews>,
+        loader: () => fetch("/news.json"),
+        hydrateFallbackElement: <p></p>,
+      },
+    ],
   },
   {
     path: "/auth",
-    element: <div>Authentication Layout </div>
+    element: <AuthLayout />,
+    children: [
+      {
+        path: "/auth/login",
+        element: <LogIn></LogIn>,
+      },
+      {
+        path: "/auth/register",
+        element: <Register></Register>,
+      },
+    ],
   },
   {
-    path: "/news",
-    element: <div>News Layout </div>
+    path: "/news-details/:id",
+    element: (
+      <PrivateRoute>
+        <NewsDetails></NewsDetails>
+      </PrivateRoute>
+    ),
+    loader: () => fetch("/news.json"),
+    hydrateFallbackElement: <p></p>,
   },
   {
     path: "/*",
-    element: <div>Error-404 </div>
+    element: <div>Error-404 </div>,
   },
-])
+]);
 
 export default router;
