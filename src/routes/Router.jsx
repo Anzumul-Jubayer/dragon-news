@@ -13,6 +13,8 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <HLayout></HLayout>,
+    loader: () => fetch("/news.json"),
+    hydrateFallbackElement: <p></p>,
     children: [
       {
         path: "",
